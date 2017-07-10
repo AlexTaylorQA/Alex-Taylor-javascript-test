@@ -1,0 +1,16 @@
+On the Garage project with the Admin Interface,
+use the following commands:
+
+1 - Create [manufacturer] [model] [registration] [fault 1] [fault 2] ...
+
+2 - Output
+
+3 - Check In [registration]
+
+4 - Check Out [registration]
+
+######
+
+NOTES: 
+- Commands are not case-sensitive.
+- Input such as reg or model will remain in the same case it was inputted.

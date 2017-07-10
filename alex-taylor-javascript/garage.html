@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+</head>
+
+<body>
+
+<input type="text" id="man" placeholder="Enter Manufacturer"><br><br>
+<input type="text" id="mod" placeholder="Enter Car Model"><br><br>
+<input type="text" id="reg" placeholder="Enter Car Registration"><br><br>
+
+<select id="listfaults" multiple="true">
+  <option value="tyre">Burst Tyre</option>
+  <option value="engine">Engine Failure</option>
+  <option value="wind">Cracked Windscreen</option>
+  <option value="radio">Broken Radio</option>
+</select>
+
+<br><br>
+
+
+<input type="button" name="in" value="Create Car" onclick="createCar();"/><br><br>
+
+<input type="button" name="in" value="Check In" onclick="checkIn();"/><br><br>
+
+<input type="button" name="out" value="Check Out" onclick="checkOut();"/><br><br>
+
+<input type="button" name="all" value="Display Garage" onclick="showAll();"/><br><br>
+
+<a href="projects.html">Go Back</a><br>
+
+<p id="theOutput"> </p>
+
+<script>
+var garage = new Array();
+var allCars = new Array();
+
+function createCar()
+{
+	var newCar = new Array();
+	var faults = new Array();
+	
+	var theMan = document.getElementById("man").value;
+	var theMod = document.getElementById("mod").value;
+	var theReg = document.getElementById("reg").value;
+		
+	newCar.push(theMan);
+	newCar.push(theMod);
+	newCar.push(theReg);
+	
+	for(i = 0; i < (document.getElementById("listfaults").length); i++)
+	{
+		if (document.getElementById("listfaults")[i].selected == true)
+		{
+			faults.push(document.getElementById("listfaults")[i].innerHTML);
+		}
+	}
+	
+	if (faults.length == 0)
+	{
+		faults.push("No Faults");
+		newCar.push(faults);
+	}
+	else
+	{
+		newCar.push(faults);
+	}
+	
+	allCars.push(newCar);
+	
+	document.getElementById("man").value = "";
+	document.getElementById("mod").value = "";
+	document.getElementById("reg").value = "";
+	document.getElementById("listfaults").selectedIndex = -1;
+	
+	alert("New car created.");
+}
+
+function checkIn()
+{
+	var checkReg = document.getElementById("reg").value;
+	
+	for(i = 0; i < allCars.length; i++)
+	{
+		if(allCars[i][2] == checkReg)
+		{
+			garage.push(allCars[i]);
+		}
+	}
+	alert("Car " + checkReg + " checked in.")
+}
+
+function checkOut()
+{
+	var checkReg = document.getElementById("reg").value;
+	
+	var endloop = garage.length;
+	
+	for(i = 0; i < garage.length; i++)
+	{
+		if(garage[i][2] == checkReg)
+		{
+			garage.splice(i, 1);
+			i = endloop;
+		}
+	}
+	alert("Car " + checkReg + " checked out.")
+}
+
+function showAll()
+{
+	var str = "<br>";
+	
+	for(i = 0; i < garage.length; i++)
+	{
+		var faultStr = "";
+		for(j = 0; j < garage[i][3].length; j++)
+		{
+			faultStr += ("<br>- " + garage[i][3][j]);
+		}
+
+		str += ("- - - - -<br>CAR " + (i + 1) 
+			+ "<br>- - - - -"
+			+ "<br>Manufacturer: " + garage[i][0]
+			+ "<br>Model: " + garage[i][1]
+			+ "<br>Registration: " + garage[i][2]
+			+ "<br>Faults:" 
+			+ faultStr
+			+ "<br><br>"
+		);
+	}
+	
+	document.getElementById("theOutput").innerHTML = str;
+}
+
+</script>
+   
+</body>
+
+</html>
